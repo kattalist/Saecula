@@ -91,7 +91,6 @@ public class Planet {
             drawBoard(g);
         } else {
             for (Tile t : planetBoard) {
-                System.out.println("Wow");
                 g.setColor(tileColors[t.type]);
                 g.drawRect(t.x, t.y, 50, 50);
             }
@@ -109,32 +108,32 @@ public class Planet {
         for (int i = 0; i < 3; i++) {
             int seedCenter = r.nextInt(planetBoard.size());
             planetBoard.get(seedCenter).type = 1;
-            for (int j = 0; j < r.nextInt(3); j++) {
+            for (int j = 0; j < r.nextInt(4); j++) {
                 try {
                     planetBoard.get(seedCenter - 8 * j).type = 1;
                 } catch (IndexOutOfBoundsException e) {
                     break;
                 }
             }
-            for (int j = 0; j < r.nextInt(3); j++) {
+            for (int j = 0; j < r.nextInt(4); j++) {
                 try {
                     planetBoard.get(seedCenter + 8 * j).type = 1;
                 } catch (IndexOutOfBoundsException e) {
                     break;
                 }
             }
-            for (int j = 0; j < r.nextInt(3); j++) {
+            for (int j = 0; j < r.nextInt(4); j++) {
                 try {
-                    if ((int) (seedCenter + j / 8) > (int) (seedCenter / 8)) {
+                    if ((int) ((seedCenter + j) / 8) > (int) (seedCenter / 8)) {
                         planetBoard.get(seedCenter + j).type = 1;
                     }
                 } catch (IndexOutOfBoundsException e) {
                     break;
                 }
             }
-            for (int j = 0; j < r.nextInt(3); j++) {
+            for (int j = 0; j < r.nextInt(4); j++) {
                 try {
-                    if ((int) (seedCenter + j / 8) < (int) (seedCenter / 8)) {
+                    if ((int) ((seedCenter - j) / 8) < (int) (seedCenter / 8)) {
                         planetBoard.get(seedCenter - j).type = 1;
                     }
                 } catch (IndexOutOfBoundsException e) {
