@@ -92,53 +92,51 @@ public class Planet {
         } else {
             for (Tile t : planetBoard) {
                 g.setColor(tileColors[t.type]);
-                g.drawRect(t.x, t.y, 50, 50);
+                g.fillRect(t.x, t.y, 49, 49);
+            }
+            g.setColor(Color.WHITE);
+            Point p = MouseInfo.getPointerInfo().getLocation();
+            g.drawRect(p.x - 14 - (p.x - 13)%50, p.y - 36 - (p.y - 35)%50, 50, 50);
+            try {
+                g.setFont(g.getFont().deriveFont(24.0f));
+                g.drawString(Tile.tileTypes[Tile.mousedOver().type]+" Tile", 10, 630);
+                g.setFont(g.getFont().deriveFont(16.0f));
+                if (Tile.mousedOver().usage == 0) {
+                    g.drawString("This tile is unused.", 10, 660);
+                } else if (Tile.mousedOver().usage == 1) {
+                    g.drawString("This tile is colonized.", 10, 660);
+                } else if (Tile.mousedOver().usage == 2) {
+                    switch (Tile.mousedOver().type) {
+                        case 0: g.drawString("This tile is being used to farm crops.", 10, 660);
+                                g.drawString("+5 food/min, -2 credits/min", 10, 680);
+                            break;
+                        case 1: g.drawString("There is a water mill on this tile.", 10, 660);
+                                g.drawString("+5 power/min, -3 credits/min", 10, 680);
+                            break;
+                        case 2: g.drawString("There is a quarry on this tile.", 10, 660);
+                                g.drawString("+5 stone/min, -3 food/min", 10, 680);
+                            break;
+                        case 3: g.drawString("There is a lumber mill on this tile.", 10, 660);
+                                g.drawString("+5 wood/min, -2 food/min", 10, 680);
+                            break;
+                        case 4: g.drawString("This tile is being used to mine clay for bricks.", 10, 660);
+                                g.drawString("+5 bricks/min, -3 food/min", 10, 680);
+                            break;
+                        case 5: g.drawString("This tile is being used to mine gold.", 10, 660);
+                                g.drawString("+5 credits/min, -3 food/min", 10, 680);
+                            break;
+                    }
+                }
+            } catch (NullPointerException e) {
             }
         }
     }
 
     public void genBoard() {
+        Random r = new Random();
         for (int i = 0; i < 12; i++) {
             for (int j = 0; j < 12; j++) {
-                planetBoard.add(new Tile(i * 50, j * 50, 0));
-            }
-        }
-        //Randomly seed some tiles with water
-        Random r = new Random();
-        for (int i = 0; i < 3; i++) {
-            int seedCenter = r.nextInt(planetBoard.size());
-            planetBoard.get(seedCenter).type = 1;
-            for (int j = 0; j < r.nextInt(4); j++) {
-                try {
-                    planetBoard.get(seedCenter - 8 * j).type = 1;
-                } catch (IndexOutOfBoundsException e) {
-                    break;
-                }
-            }
-            for (int j = 0; j < r.nextInt(4); j++) {
-                try {
-                    planetBoard.get(seedCenter + 8 * j).type = 1;
-                } catch (IndexOutOfBoundsException e) {
-                    break;
-                }
-            }
-            for (int j = 0; j < r.nextInt(4); j++) {
-                try {
-                    if ((int) ((seedCenter + j) / 8) > (int) (seedCenter / 8)) {
-                        planetBoard.get(seedCenter + j).type = 1;
-                    }
-                } catch (IndexOutOfBoundsException e) {
-                    break;
-                }
-            }
-            for (int j = 0; j < r.nextInt(4); j++) {
-                try {
-                    if ((int) ((seedCenter - j) / 8) < (int) (seedCenter / 8)) {
-                        planetBoard.get(seedCenter - j).type = 1;
-                    }
-                } catch (IndexOutOfBoundsException e) {
-                    break;
-                }
+                planetBoard.add(new Tile(i * 50, j * 50, r.nextInt(6)));
             }
         }
     }

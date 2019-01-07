@@ -29,6 +29,7 @@ public class MainFrame extends javax.swing.JFrame {
     private static final String moveLeft = "move left";
     private static final String moveUp = "move up";
     private static final String moveDown = "move down";
+    private static final String leaveMenu = "leave menu";
     /**
      * Creates new form MainFrame
      */
@@ -41,11 +42,13 @@ public class MainFrame extends javax.swing.JFrame {
         gameBoard1.getInputMap(IFW).put(KeyStroke.getKeyStroke("RIGHT"), moveRight);
         gameBoard1.getInputMap(IFW).put(KeyStroke.getKeyStroke("UP"), moveUp);
         gameBoard1.getInputMap(IFW).put(KeyStroke.getKeyStroke("DOWN"), moveDown);
+        gameBoard1.getInputMap(IFW).put(KeyStroke.getKeyStroke("ESCAPE"), leaveMenu);
         
         gameBoard1.getActionMap().put(moveLeft, new moveAction(4));
         gameBoard1.getActionMap().put(moveRight, new moveAction(2));
         gameBoard1.getActionMap().put(moveUp, new moveAction(1));
         gameBoard1.getActionMap().put(moveDown, new moveAction(3));
+        gameBoard1.getActionMap().put(leaveMenu, new returnAction());
     }
 
     public static void initUniverse() {
@@ -143,6 +146,23 @@ public class MainFrame extends javax.swing.JFrame {
                     break;
                 case 4: screenX -= 5;
                     break;
+            }
+            repaint();
+        }
+    }
+    
+    private class returnAction extends AbstractAction {
+
+        returnAction() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Planet.clickedPlanet = null;
+            for (StarSystem s: universe) {
+                for (Planet p: s.system) {
+                    p.clicked = false;
+                }
             }
             repaint();
         }
