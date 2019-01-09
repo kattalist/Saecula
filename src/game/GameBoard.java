@@ -30,16 +30,46 @@ public class GameBoard extends javax.swing.JPanel {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                for (StarSystem s : MainFrame.universe) {
-                    for (Planet p : s.system) {
-                        double cx = p.x + (p.size / 2);
-                        double cy = p.y + (p.size / 2);
-                        double xDiff = Math.abs(cx - p.parent.x);
-                        double yDiff = Math.abs(cy - p.parent.y);
-                        double dist = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
-                        if (p.mousedOver(MouseInfo.getPointerInfo().getLocation(), new Point((int)(p.parent.x - Math.cos(Math.toRadians(p.orbitAngle - 90)) * dist), (int)(p.parent.y - Math.sin(Math.toRadians(p.orbitAngle - 90)) * dist)))) {
-                            p.clicked = true;
-                            Planet.clickedPlanet = p;
+                if (Planet.clickedPlanet == null) {
+                    for (StarSystem s : MainFrame.universe) {
+                        for (Planet p : s.system) {
+                            double cx = p.x + (p.size / 2);
+                            double cy = p.y + (p.size / 2);
+                            double xDiff = Math.abs(cx - p.parent.x);
+                            double yDiff = Math.abs(cy - p.parent.y);
+                            double dist = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
+                            if (p.mousedOver(MouseInfo.getPointerInfo().getLocation(), new Point((int) (p.parent.x - Math.cos(Math.toRadians(p.orbitAngle - 90)) * dist), (int) (p.parent.y - Math.sin(Math.toRadians(p.orbitAngle - 90)) * dist)))) {
+                                p.clicked = true;
+                                Planet.clickedPlanet = p;
+                            }
+                        }
+                    }
+                } else {
+                    if (Tile.clickedTile == null) {
+                        for (Tile t : Planet.clickedPlanet.planetBoard) {
+                            if (((MouseInfo.getPointerInfo().getLocation().x - 13) - ((MouseInfo.getPointerInfo().getLocation().x - 13) % 50) == t.x) && ((MouseInfo.getPointerInfo().getLocation().y - 35) - ((MouseInfo.getPointerInfo().getLocation().y - 35) % 50) == t.y)) {
+                                Tile.clickedTile = t;
+                            }
+                        }
+                    } else {
+                        if (MouseInfo.getPointerInfo().getLocation().x - 13 >= 100 && MouseInfo.getPointerInfo().getLocation().x - 13 <= 600) {
+                            if (MouseInfo.getPointerInfo().getLocation().y - 35 <= 300 && MouseInfo.getPointerInfo().getLocation().y - 35 >= 200) {
+                                if (Tile.clickedTile.usage == 1) {
+                                    if (Tile.clickedTile.colonyLevel < 5) {
+                                        Tile.clickedTile.colonyLevel++;
+                                    }
+                                } else {
+                                    Tile.clickedTile.usage = 1;
+                                    Tile.clickedTile.colonyLevel = 1;
+                                }
+                                Tile.clickedTile = null;
+                            } else if (MouseInfo.getPointerInfo().getLocation().y - 35 <= 500 && MouseInfo.getPointerInfo().getLocation().y - 35 >= 400) {
+                                Tile.clickedTile.usage = 2;
+                                Tile.clickedTile = null;
+                            } else if (MouseInfo.getPointerInfo().getLocation().y - 35 <= 700 && MouseInfo.getPointerInfo().getLocation().y - 35 >= 600) {
+                                Tile.clickedTile.usage = 3;
+                                Tile.clickedTile = null;
+                            }
                         }
                     }
                 }
@@ -53,8 +83,12 @@ public class GameBoard extends javax.swing.JPanel {
     }
 
     public void drawBoard(Graphics g) {
-        for (StarSystem s : MainFrame.universe) {
-            s.display(g);
+        if (Tile.clickedTile != null) {
+            Tile.clickedTile.displayClickedScreen(g);
+        } else {
+            for (StarSystem s : MainFrame.universe) {
+                s.display(g);
+            }
         }
     }
 

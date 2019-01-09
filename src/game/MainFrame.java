@@ -18,18 +18,33 @@ import javax.swing.KeyStroke;
  * @author 073787251
  */
 public class MainFrame extends javax.swing.JFrame {
+
+    public static int food = 0;
+    public static int stone = 0;
+    public static int bricks = 0;
+    public static int power = 0;
+    public static int wood = 0;
+    public static int gold = 10;
+    public static int pop = 5;
+    
+    public static boolean classTwo = false;
+    public static boolean classThree = false;
+    public static boolean diplomacy = false;
+    public static boolean economics = false;
+    
     public static ArrayList<Planet> planets = new ArrayList<>();
     public static ArrayList<Star> stars = new ArrayList<>();
     public static ArrayList<StarSystem> universe = new ArrayList<>();
     public static int screenX = 0, screenY = 0;
     public static Random r = new Random();
-    
+
     private static final int IFW = JComponent.WHEN_IN_FOCUSED_WINDOW;
     private static final String moveRight = "move right";
     private static final String moveLeft = "move left";
     private static final String moveUp = "move up";
     private static final String moveDown = "move down";
     private static final String leaveMenu = "leave menu";
+
     /**
      * Creates new form MainFrame
      */
@@ -37,13 +52,13 @@ public class MainFrame extends javax.swing.JFrame {
         initComponents();
         initUniverse();
         gameBoard1.anim();
-        
+        //This code is gross
         gameBoard1.getInputMap(IFW).put(KeyStroke.getKeyStroke("LEFT"), moveLeft);
         gameBoard1.getInputMap(IFW).put(KeyStroke.getKeyStroke("RIGHT"), moveRight);
         gameBoard1.getInputMap(IFW).put(KeyStroke.getKeyStroke("UP"), moveUp);
         gameBoard1.getInputMap(IFW).put(KeyStroke.getKeyStroke("DOWN"), moveDown);
         gameBoard1.getInputMap(IFW).put(KeyStroke.getKeyStroke("ESCAPE"), leaveMenu);
-        
+
         gameBoard1.getActionMap().put(moveLeft, new moveAction(4));
         gameBoard1.getActionMap().put(moveRight, new moveAction(2));
         gameBoard1.getActionMap().put(moveUp, new moveAction(1));
@@ -54,6 +69,7 @@ public class MainFrame extends javax.swing.JFrame {
     public static void initUniverse() {
         universe.add(new StarSystem(5, new Star(r.nextInt(400) + 200, r.nextInt(400) + 200, r.nextInt(100) + 50, new Color(r.nextInt(55) + 200, r.nextInt(255), r.nextInt(5)))));
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -126,7 +142,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
     }
-    
+
     private class moveAction extends AbstractAction {
 
         int moveDir;
@@ -138,19 +154,23 @@ public class MainFrame extends javax.swing.JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             switch (moveDir) {
-                case 1: screenY -= 5;
+                case 1:
+                    screenY -= 5;
                     break;
-                case 2: screenX += 5;
+                case 2:
+                    screenX += 5;
                     break;
-                case 3: screenY += 5;
+                case 3:
+                    screenY += 5;
                     break;
-                case 4: screenX -= 5;
+                case 4:
+                    screenX -= 5;
                     break;
             }
             repaint();
         }
     }
-    
+
     private class returnAction extends AbstractAction {
 
         returnAction() {
@@ -158,10 +178,14 @@ public class MainFrame extends javax.swing.JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Planet.clickedPlanet = null;
-            for (StarSystem s: universe) {
-                for (Planet p: s.system) {
-                    p.clicked = false;
+            if (Tile.clickedTile != null) {
+                Tile.clickedTile = null;
+            } else {
+                Planet.clickedPlanet = null;
+                for (StarSystem s : universe) {
+                    for (Planet p : s.system) {
+                        p.clicked = false;
+                    }
                 }
             }
             repaint();

@@ -96,34 +96,69 @@ public class Planet {
             }
             g.setColor(Color.WHITE);
             Point p = MouseInfo.getPointerInfo().getLocation();
-            g.drawRect(p.x - 14 - (p.x - 13)%50, p.y - 36 - (p.y - 35)%50, 50, 50);
+            if (p.x - 13 < 600 && p.y  - 35 < 600) {
+                g.drawRect(p.x - 14 - (p.x - 13) % 50, p.y - 36 - (p.y - 35) % 50, 50, 50);
+            }
             try {
                 g.setFont(g.getFont().deriveFont(24.0f));
-                g.drawString(Tile.tileTypes[Tile.mousedOver().type]+" Tile", 10, 630);
+                g.drawString(Tile.tileTypes[Tile.mousedOver().type] + " Tile", 10, 630);
                 g.setFont(g.getFont().deriveFont(16.0f));
                 if (Tile.mousedOver().usage == 0) {
                     g.drawString("This tile is unused.", 10, 660);
                 } else if (Tile.mousedOver().usage == 1) {
-                    g.drawString("This tile is colonized.", 10, 660);
+                    g.drawString("There is currently a Level " + Tile.mousedOver().colonyLevel + " colony established here.", 10, 660);
                 } else if (Tile.mousedOver().usage == 2) {
                     switch (Tile.mousedOver().type) {
-                        case 0: g.drawString("This tile is being used to farm crops.", 10, 660);
-                                g.drawString("+5 food/min, -2 credits/min", 10, 680);
+                        case 0:
+                            g.drawString("This tile is being used to farm crops.", 10, 660);
+                            g.drawString("+5 food/min, -2 credits/min", 10, 680);
                             break;
-                        case 1: g.drawString("There is a water mill on this tile.", 10, 660);
-                                g.drawString("+5 power/min, -3 credits/min", 10, 680);
+                        case 1:
+                            g.drawString("There is a water mill on this tile.", 10, 660);
+                            g.drawString("+5 power/min, -3 credits/min", 10, 680);
                             break;
-                        case 2: g.drawString("There is a quarry on this tile.", 10, 660);
-                                g.drawString("+5 stone/min, -3 food/min", 10, 680);
+                        case 2:
+                            g.drawString("There is a quarry on this tile.", 10, 660);
+                            g.drawString("+5 stone/min, -3 food/min", 10, 680);
                             break;
-                        case 3: g.drawString("There is a lumber mill on this tile.", 10, 660);
-                                g.drawString("+5 wood/min, -2 food/min", 10, 680);
+                        case 3:
+                            g.drawString("There is a lumber mill on this tile.", 10, 660);
+                            g.drawString("+5 wood/min, -2 food/min", 10, 680);
                             break;
-                        case 4: g.drawString("This tile is being used to mine clay for bricks.", 10, 660);
-                                g.drawString("+5 bricks/min, -3 food/min", 10, 680);
+                        case 4:
+                            g.drawString("This tile is being used to mine clay for bricks.", 10, 660);
+                            g.drawString("+5 bricks/min, -3 food/min", 10, 680);
                             break;
-                        case 5: g.drawString("This tile is being used to mine gold.", 10, 660);
-                                g.drawString("+5 credits/min, -3 food/min", 10, 680);
+                        case 5:
+                            g.drawString("This tile is being used to mine gold.", 10, 660);
+                            g.drawString("+5 credits/min, -3 food/min", 10, 680);
+                            break;
+                    }
+                } else {
+                    switch (Tile.mousedOver().type) {
+                        case 0:
+                            g.drawString("This tile is being used to farm livestock.", 10, 660);
+                            g.drawString("+8 food/min, -5 credits/min", 10, 680);
+                            break;
+                        case 1:
+                            g.drawString("There is an underwater mine on this tile.", 10, 660);
+                            g.drawString("+5 credits/min, -5 food/min", 10, 680);
+                            break;
+                        case 2:
+                            g.drawString("There is a nuclear testing site on this tile.", 10, 660);
+                            g.drawString("Unlocks Class II weaponry, -10 food/min", 10, 680);
+                            break;
+                        case 3:
+                            g.drawString("This tile is being used to make paper for books.", 10, 660);
+                            g.drawString("Unlocks Diplomacy, -2 credits/min", 10, 680);
+                            break;
+                        case 4:
+                            g.drawString("There is an antimatter testing site on this tile.", 10, 660);
+                            g.drawString("Unlocks Class III weaponry, -20 food/min", 10, 680);
+                            break;
+                        case 5:
+                            g.drawString("There is a trade hub on this tile.", 10, 660);
+                            g.drawString("Unlocks Economics, -3 food/min", 10, 680);
                             break;
                     }
                 }
