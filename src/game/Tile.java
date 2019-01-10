@@ -23,11 +23,11 @@ public class Tile {
     int colonyLevel = 0; //If there is a colony here, this variable will reflect that
     /*
      COLONY STATS:
-     Level 1: +2 population/min, +2 gold/min, -1 food/4 people/min
-     Level 2: +4 population/min, +5 gold/min, -1 food/6 people/min (5c + 5sb cost)
-     Level 3: +10 population/min, +15 gold/min, -1 food/15 people/min (15c + 20sb cost)
-     Level 4: +25 population/min, +40 gold/min, -1 food/25 people/min (30c + 40sb cost)
-     Level 5: +60 population/min, +100 gold/min, -1 food/40 people/min (75c + 100sb cost)
+     Level 1: +2 population/min, +3 gold/min, -2 food/min
+     Level 2: +4 population/min, +5 gold/min, -5 food/min (5c + 5sb cost)
+     Level 3: +10 population/min, +15 gold/min, -10 food/min (15c + 20sb cost)
+     Level 4: +25 population/min, +40 gold/min, -20 food/min (30c + 40sb cost)
+     Level 5: +60 population/min, +100 gold/min, -50 food/min (75c + 100sb cost)
      SPECIAL USES:
      Grass - farm crops(+5 food/min, -2 credits/min(5c cost)) | farm livestock(+8 food/min, -5 credits/min(5c cost))
      Water - water mill(+5 power/min, -3 credits/min(10sb cost)) | underwater mining(+5 credits/min, -5 food/min(-5sb))
@@ -108,19 +108,19 @@ public class Tile {
             switch (colonyLevel) {
                 case 1:
                     g.drawString("Upgrade to a Level 2 colony (-5 credits, -5 stone/brick)", 250, 245);
-                    g.drawString("+4 population/min, +5 gold/min, -1 food/6 people/min", 250, 271);
+                    g.drawString("+4 population/min, +5 gold/min, -5 food/min", 250, 271);
                     break;
                 case 2:
                     g.drawString("Upgrade to a Level 3 colony (-15 credits, -20 stone/brick)", 250, 245);
-                    g.drawString("+10 population/min, +15 gold/min, -1 food/15 people/min", 250, 271);
+                    g.drawString("+10 population/min, +15 gold/min, -10 food/min", 250, 271);
                     break;
                 case 3:
                     g.drawString("Upgrade to a Level 4 colony (-30 credits, -40 stone/brick)", 250, 245);
-                    g.drawString("+25 population/min, +40 gold/min, -1 food/25 people/min", 250, 271);
+                    g.drawString("+25 population/min, +40 gold/min, -20 food/min", 250, 271);
                     break;
                 case 4:
                     g.drawString("Upgrade to a Level 5 colony (-75 credits, -100 stone/brick)", 250, 245);
-                    g.drawString("+60 population/min, +100 gold/min, -1 food/40 people/min", 250, 271);
+                    g.drawString("+60 population/min, +100 gold/min, -50 food/min", 250, 271);
                     break;
                 default: 
                     g.setFont(g.getFont().deriveFont(16.0f));

@@ -32,6 +32,8 @@ public class MainFrame extends javax.swing.JFrame {
     public static boolean diplomacy = false;
     public static boolean economics = false;
     
+    public static int crops = 0, livestock = 0, mills = 0, underMines = 0, quarries = 0, nuclears = 0, lumbers = 0, papers = 0, clayMines = 0, antimatters = 0, goldMines = 0, hubs = 0, lvlOnes = 0, lvlTwos = 0, lvlThrees = 0, lvlFours = 0, lvlFives = 0;
+    
     public static ArrayList<Planet> planets = new ArrayList<>();
     public static ArrayList<Star> stars = new ArrayList<>();
     public static ArrayList<StarSystem> universe = new ArrayList<>();
