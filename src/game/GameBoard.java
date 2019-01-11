@@ -58,18 +58,38 @@ public class GameBoard extends javax.swing.JPanel {
                                 if (Tile.clickedTile.usage == 1) {
                                     if (Tile.clickedTile.colonyLevel < 5) {
                                         Tile.clickedTile.colonyLevel++;
-                                        if (Tile.clickedTile.colonyLevel == 2) {
+                                        if (Tile.clickedTile.colonyLevel == 2 && MainFrame.gold >= 5 && (MainFrame.stone >= 5 || MainFrame.bricks >= 5)) {
                                             MainFrame.lvlOnes --;
                                             MainFrame.lvlTwos ++;
-                                        } else if (Tile.clickedTile.colonyLevel == 3) {
+                                            if (MainFrame.stone >= 5) {
+                                                MainFrame.stone -= 5;
+                                            } else {
+                                                MainFrame.bricks -= 5;
+                                            }
+                                        } else if (Tile.clickedTile.colonyLevel == 3 && MainFrame.gold >= 15 && (MainFrame.stone >= 20 || MainFrame.bricks >= 20)) {
                                             MainFrame.lvlTwos --;
                                             MainFrame.lvlThrees ++;
-                                        } else if (Tile.clickedTile.colonyLevel == 4) {
+                                            if (MainFrame.stone >= 20) {
+                                                MainFrame.stone -= 20;
+                                            } else {
+                                                MainFrame.bricks -= 20;
+                                            }
+                                        } else if (Tile.clickedTile.colonyLevel == 4 && MainFrame.gold >= 30 && (MainFrame.stone >= 40 || MainFrame.bricks >= 40)) {
                                             MainFrame.lvlThrees --;
                                             MainFrame.lvlFours ++;
-                                        } else if (Tile.clickedTile.colonyLevel == 5) {
+                                            if (MainFrame.stone >= 40) {
+                                                MainFrame.stone -= 40;
+                                            } else {
+                                                MainFrame.bricks -= 40;
+                                            }
+                                        } else if (Tile.clickedTile.colonyLevel == 5 && MainFrame.gold >= 75 && (MainFrame.stone >= 100 || MainFrame.bricks >= 100)) {
                                             MainFrame.lvlFours --;
                                             MainFrame.lvlFives ++;
+                                            if (MainFrame.stone >= 100) {
+                                                MainFrame.stone -= 100;
+                                            } else {
+                                                MainFrame.bricks -= 100;
+                                            }
                                         }
                                     }
                                 } else {
@@ -223,13 +243,6 @@ public class GameBoard extends javax.swing.JPanel {
                     g.drawString("\u25BC" + Math.abs(diffs[i]),600,i*25 + 50);
                 }
             }
-            /*g.drawString(MainFrame.gold + " credits", 625, 50);
-            g.drawString(MainFrame.food + " food", 625, 75);
-            g.drawString(MainFrame.stone + " stone", 625, 100);
-            g.drawString(MainFrame.bricks + " bricks", 625, 125);
-            g.drawString(MainFrame.power + " power", 625, 150);
-            g.drawString(MainFrame.wood + " wood", 625, 175);
-            g.drawString(MainFrame.pop + " people", 625, 200);*/
         }
     }
 
@@ -281,7 +294,7 @@ public class GameBoard extends javax.swing.JPanel {
             MainFrame.power -= (MainFrame.antimatters * 20);
             //GOLD MINES
             MainFrame.gold += (MainFrame.goldMines * 5); 
-            MainFrame.food -= (MainFrame.goldMines * 2);
+            MainFrame.food -= (MainFrame.goldMines * 3);
             //TRADE HUBS
             MainFrame.food -= (MainFrame.hubs * 3);
             //COLONIES
@@ -303,6 +316,12 @@ public class GameBoard extends javax.swing.JPanel {
             MainFrame.food -= (MainFrame.lvlThrees * 10);
             MainFrame.food -= (MainFrame.lvlFours * 20);
             MainFrame.food -= (MainFrame.lvlFives * 50);
+            
+            MainFrame.power -= (MainFrame.lvlOnes * 5);
+            MainFrame.power -= (MainFrame.lvlTwos * 10);
+            MainFrame.power -= (MainFrame.lvlThrees * 15);
+            MainFrame.power -= (MainFrame.lvlFours * 25);
+            MainFrame.power -= (MainFrame.lvlFives * 50);
             //Afterwards, calculate the amount each resource has changed
             foodDiff = MainFrame.food - pfood;
             stoneDiff = MainFrame.stone - pstone;
