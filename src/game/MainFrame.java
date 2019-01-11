@@ -37,6 +37,7 @@ public class MainFrame extends javax.swing.JFrame {
     public static ArrayList<Planet> planets = new ArrayList<>();
     public static ArrayList<Star> stars = new ArrayList<>();
     public static ArrayList<StarSystem> universe = new ArrayList<>();
+    
     public static int screenX = 0, screenY = 0;
     public static Random r = new Random();
 
@@ -46,12 +47,15 @@ public class MainFrame extends javax.swing.JFrame {
     private static final String moveUp = "move up";
     private static final String moveDown = "move down";
     private static final String leaveMenu = "leave menu";
+    private static final String openArmy = "open army";
 
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         initComponents();
+        gameBoard1.setVisible(true);
+        armyPanel1.setVisible(false);
         initUniverse();
         gameBoard1.anim();
         //This code is gross
@@ -60,12 +64,14 @@ public class MainFrame extends javax.swing.JFrame {
         gameBoard1.getInputMap(IFW).put(KeyStroke.getKeyStroke("UP"), moveUp);
         gameBoard1.getInputMap(IFW).put(KeyStroke.getKeyStroke("DOWN"), moveDown);
         gameBoard1.getInputMap(IFW).put(KeyStroke.getKeyStroke("ESCAPE"), leaveMenu);
+        gameBoard1.getInputMap(IFW).put(KeyStroke.getKeyStroke("E"), openArmy);
 
         gameBoard1.getActionMap().put(moveLeft, new moveAction(4));
         gameBoard1.getActionMap().put(moveRight, new moveAction(2));
         gameBoard1.getActionMap().put(moveUp, new moveAction(1));
         gameBoard1.getActionMap().put(moveDown, new moveAction(3));
         gameBoard1.getActionMap().put(leaveMenu, new returnAction());
+        gameBoard1.getActionMap().put(openArmy, new changeAction());
     }
 
     public static void initUniverse() {
@@ -82,18 +88,30 @@ public class MainFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         gameBoard1 = new game.GameBoard();
+        armyPanel1 = new game.ArmyPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        javax.swing.GroupLayout armyPanel1Layout = new javax.swing.GroupLayout(armyPanel1);
+        armyPanel1.setLayout(armyPanel1Layout);
+        armyPanel1Layout.setHorizontalGroup(
+            armyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 800, Short.MAX_VALUE)
+        );
+        armyPanel1Layout.setVerticalGroup(
+            armyPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 763, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout gameBoard1Layout = new javax.swing.GroupLayout(gameBoard1);
         gameBoard1.setLayout(gameBoard1Layout);
         gameBoard1Layout.setHorizontalGroup(
             gameBoard1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
+            .addComponent(armyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         gameBoard1Layout.setVerticalGroup(
             gameBoard1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 763, Short.MAX_VALUE)
+            .addComponent(armyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -193,7 +211,20 @@ public class MainFrame extends javax.swing.JFrame {
             repaint();
         }
     }
+    
+    private class changeAction extends AbstractAction {
+
+        changeAction() {
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            armyPanel1.setVisible(true);
+            armyPanel1.repaint();
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private game.ArmyPanel armyPanel1;
     private game.GameBoard gameBoard1;
     // End of variables declaration//GEN-END:variables
 }

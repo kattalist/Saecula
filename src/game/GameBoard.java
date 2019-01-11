@@ -227,7 +227,7 @@ public class GameBoard extends javax.swing.JPanel {
                 s.display(g);
             }
         }
-        if (Planet.clickedPlanet != null) {
+        if (Planet.clickedPlanet != null && Tile.clickedTile == null) {
             String[] lines = {MainFrame.gold + " credits",MainFrame.food + " food",MainFrame.stone + " stone",MainFrame.bricks + " bricks",MainFrame.power + " power",MainFrame.wood + " wood",MainFrame.pop + " people"};
             int[] diffs = {goldDiff, foodDiff, stoneDiff, brickDiff, powerDiff, woodDiff, popDiff};
             g.setColor(Color.WHITE);
@@ -286,7 +286,7 @@ public class GameBoard extends javax.swing.JPanel {
             MainFrame.wood += (MainFrame.lumbers * 5); 
             MainFrame.food -= (MainFrame.lumbers * 2);
             //PAPER FACTORY
-            MainFrame.gold -= (MainFrame.papers * 2);
+            MainFrame.wood -= (MainFrame.papers * 2);
             //CLAY MINES
             MainFrame.bricks += (MainFrame.clayMines * 5); 
             MainFrame.food -= (MainFrame.clayMines * 3);

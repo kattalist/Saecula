@@ -150,7 +150,7 @@ public class Planet {
                             break;
                         case 3:
                             g.drawString("This tile is being used to make paper for books.", 10, 660);
-                            g.drawString("Unlocks Diplomacy, -2 credits/min", 10, 680);
+                            g.drawString("Unlocks Diplomacy, -2 wood/min", 10, 680);
                             break;
                         case 4:
                             g.drawString("There is an antimatter testing site on this tile.", 10, 660);

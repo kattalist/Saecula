@@ -32,7 +32,7 @@ public class Tile {
      Grass - farm crops(+5 food/min, -2 credits/min(5c cost)) | farm livestock(+8 food/min, -5 credits/min(5c cost))
      Water - water mill(+5 power/min, -3 credits/min(10sb cost)) | underwater mining(+5 credits/min, -5 food/min(-5sb))
      Stone - mine(+5 stone/min, -3 food/min(3w cost)) | nuclear testing(Unlocks Class II weaponry, -10 power/min(5c cost))
-     Forest - chop trees (+5 wood/min, -2 food/min(no cost)) | make paper(Unlocks Diplomacy, -2 credits/min(5sb))
+     Forest - chop trees (+5 wood/min, -2 food/min(no cost)) | make paper(Unlocks Diplomacy, -2 wood/min(5sb))
      Clay - make bricks(+5 bricks/min, -3 food/min(3w cost)) | antimatter testing(Unlocks Class III weaponry, -20 power/min(20c cost))
      Ore - mine gold(+5 credits/min, -3 food/min(2w cost)) | build trade hub(Unlocks Economics, -3 food/min(3c cost))
      */
@@ -86,7 +86,7 @@ public class Tile {
                     g.drawString("Chop trees (no cost)", 250, 445);
                     g.drawString("+5 wood/min, -2 food/min", 250, 471);
                     g.drawString("Build a paper factory (-5 stone/brick)", 250, 645);
-                    g.drawString("Unlocks Diplomacy, -2 credits/min", 250, 671);
+                    g.drawString("Unlocks Diplomacy, -2 wood/min", 250, 671);
                     break;
                 case 4:
                     g.drawString("Mine clay (-3 wood)", 250, 445);
@@ -172,7 +172,7 @@ public class Tile {
                     break;
                 case 3:
                     g.drawString("This tile is being used to make paper for books.", 150, 100);
-                    g.drawString("Unlocks Diplomacy, -2 credits/min", 215, 130);
+                    g.drawString("Unlocks Diplomacy, -2 wood/min", 215, 130);
                     break;
                 case 4:
                     g.drawString("There is an antimatter testing site on this tile.", 155, 100);
