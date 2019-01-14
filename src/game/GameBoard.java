@@ -214,7 +214,7 @@ public class GameBoard extends javax.swing.JPanel {
 
     public void anim() {
         Timer t1 = new Timer(17, new TimerListener());
-        Timer minUpdate =  new Timer(10000, new MinuteTimer());
+        Timer minUpdate =  new Timer(6000, new MinuteTimer());
         t1.start();
         minUpdate.start();
     }

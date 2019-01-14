@@ -27,8 +27,8 @@ public class MainFrame extends javax.swing.JFrame {
     public static int gold = 10;
     public static int pop = 5;
     
-    public static boolean classTwo = false;
-    public static boolean classThree = false;
+    public static boolean classTwo = true;
+    public static boolean classThree = true;
     public static boolean diplomacy = false;
     public static boolean economics = false;
     
@@ -76,6 +76,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     public static void initUniverse() {
         universe.add(new StarSystem(5, new Star(r.nextInt(400) + 200, r.nextInt(400) + 200, r.nextInt(100) + 50, new Color(r.nextInt(55) + 200, r.nextInt(255), r.nextInt(5)))));
+        universe.add(new StarSystem(r.nextInt(6), new Star(r.nextInt(400) + 1500, r.nextInt(400) + 200, r.nextInt(100) + 50, new Color(r.nextInt(55) + 200, r.nextInt(255), r.nextInt(5)))));
+        universe.add(new StarSystem(r.nextInt(6), new Star(r.nextInt(400) - 1500, r.nextInt(400) + 200, r.nextInt(100) + 50, new Color(r.nextInt(55) + 200, r.nextInt(255), r.nextInt(5)))));
+        universe.add(new StarSystem(r.nextInt(6), new Star(r.nextInt(400) + 200, r.nextInt(400) - 1500, r.nextInt(100) + 50, new Color(r.nextInt(55) + 200, r.nextInt(255), r.nextInt(5)))));
+        universe.add(new StarSystem(r.nextInt(6), new Star(r.nextInt(400) + 200, r.nextInt(400) + 1500, r.nextInt(100) + 50, new Color(r.nextInt(55) + 200, r.nextInt(255), r.nextInt(5)))));
     }
 
     /**
@@ -175,16 +179,16 @@ public class MainFrame extends javax.swing.JFrame {
         public void actionPerformed(ActionEvent e) {
             switch (moveDir) {
                 case 1:
-                    screenY -= 5;
+                    screenY -= 8;
                     break;
                 case 2:
-                    screenX += 5;
+                    screenX += 8;
                     break;
                 case 3:
-                    screenY += 5;
+                    screenY += 8;
                     break;
                 case 4:
-                    screenX -= 5;
+                    screenX -= 8;
                     break;
             }
             repaint();
@@ -219,8 +223,13 @@ public class MainFrame extends javax.swing.JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            armyPanel1.setVisible(true);
-            armyPanel1.repaint();
+            if (!armyPanel1.isVisible()) {
+                armyPanel1.setVisible(true);
+                armyPanel1.repaint();
+            } else {
+                armyPanel1.setVisible(false);
+                repaint();
+            }
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
