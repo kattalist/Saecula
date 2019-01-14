@@ -76,10 +76,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     public static void initUniverse() {
         universe.add(new StarSystem(5, new Star(r.nextInt(400) + 200, r.nextInt(400) + 200, r.nextInt(100) + 50, new Color(r.nextInt(55) + 200, r.nextInt(255), r.nextInt(5)))));
-        universe.add(new StarSystem(r.nextInt(6), new Star(r.nextInt(400) + 1500, r.nextInt(400) + 200, r.nextInt(100) + 50, new Color(r.nextInt(55) + 200, r.nextInt(255), r.nextInt(5)))));
-        universe.add(new StarSystem(r.nextInt(6), new Star(r.nextInt(400) - 1500, r.nextInt(400) + 200, r.nextInt(100) + 50, new Color(r.nextInt(55) + 200, r.nextInt(255), r.nextInt(5)))));
-        universe.add(new StarSystem(r.nextInt(6), new Star(r.nextInt(400) + 200, r.nextInt(400) - 1500, r.nextInt(100) + 50, new Color(r.nextInt(55) + 200, r.nextInt(255), r.nextInt(5)))));
-        universe.add(new StarSystem(r.nextInt(6), new Star(r.nextInt(400) + 200, r.nextInt(400) + 1500, r.nextInt(100) + 50, new Color(r.nextInt(55) + 200, r.nextInt(255), r.nextInt(5)))));
+        universe.add(new StarSystem(r.nextInt(5) + 1, new Star(r.nextInt(400) + 1500, r.nextInt(400) + 200, r.nextInt(100) + 50, new Color(r.nextInt(55) + 200, r.nextInt(255), r.nextInt(5)))));
+        universe.add(new StarSystem(r.nextInt(5) + 1, new Star(r.nextInt(400) - 1500, r.nextInt(400) + 200, r.nextInt(100) + 50, new Color(r.nextInt(55) + 200, r.nextInt(255), r.nextInt(5)))));
+        universe.add(new StarSystem(r.nextInt(5) + 1, new Star(r.nextInt(400) + 200, r.nextInt(400) - 1500, r.nextInt(100) + 50, new Color(r.nextInt(55) + 200, r.nextInt(255), r.nextInt(5)))));
+        universe.add(new StarSystem(r.nextInt(5) + 1, new Star(r.nextInt(400) + 200, r.nextInt(400) + 1500, r.nextInt(100) + 50, new Color(r.nextInt(55) + 200, r.nextInt(255), r.nextInt(5)))));
     }
 
     /**
