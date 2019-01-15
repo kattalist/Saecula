@@ -49,11 +49,10 @@ public class ArmyPanel extends javax.swing.JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (MouseInfo.getPointerInfo().getLocation().x - 13 < 200 && MouseInfo.getPointerInfo().getLocation().x - 13 > 25 && MouseInfo.getPointerInfo().getLocation().y - 35 < 625 && MouseInfo.getPointerInfo().getLocation().y - 35 > 350) {
-                    System.out.println("Oh my");
-                    if (MainFrame.gold >= Ship.selectedShip.cost && MainFrame.pop >= Ship.selectedShip.crew) {
-                        System.out.println("Howdy");
+                    if (MainFrame.civs.get(0).gold >= Ship.selectedShip.cost && MainFrame.civs.get(0).pop >= Ship.selectedShip.crew) {
                         playerArmy.size ++;
-                        MainFrame.gold -= Ship.selectedShip.cost;
+                        playerArmy.fleet.add(Ship.selectedShip);
+                        MainFrame.civs.get(0).gold -= Ship.selectedShip.cost;
                     }
                 }
             }
@@ -79,14 +78,14 @@ public class ArmyPanel extends javax.swing.JPanel {
             g.drawString(store[i].name, 25, i*25 + 375);
             checkMouseInteraction(i, g);
         }
-        if (MainFrame.classTwo) {
+        if (MainFrame.civs.get(0).classTwo) {
             for (int i = 2; i < 6; i++) {
                 g.setFont(g.getFont().deriveFont(12.0f));
                 g.drawString(store[i].name, 25, i*25 + 375);
                 checkMouseInteraction(i, g);
             }
         }
-        if (MainFrame.classThree) {
+        if (MainFrame.civs.get(0).classThree) {
             for (int i = 6; i < store.length; i++) {
                 g.setFont(g.getFont().deriveFont(12.0f));
                 g.drawString(store[i].name, 25, i*25 + 375);

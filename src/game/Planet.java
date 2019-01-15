@@ -5,8 +5,10 @@
  */
 package game;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -98,6 +100,12 @@ public class Planet {
             for (Tile t : planetBoard) {
                 g.setColor(tileColors[t.type]);
                 g.fillRect(t.x, t.y, 49, 49);
+                if (t.usage != 0) {
+                    Graphics2D g2 = (Graphics2D) g;
+                    g2.setColor(parentSystem.owner.outlineColor);
+                    g2.setStroke(new BasicStroke(2));
+                    g2.drawRect(t.x,t.y,49,49);
+                }
             }
             g.setColor(Color.WHITE);
             Point p = MouseInfo.getPointerInfo().getLocation();

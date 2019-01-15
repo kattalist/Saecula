@@ -20,21 +20,6 @@ import javax.swing.KeyStroke;
 public class MainFrame extends javax.swing.JFrame {
     
     public static ArrayList<Civ> civs = new ArrayList<>();
-
-    public static int food = 0;
-    public static int stone = 0;
-    public static int bricks = 0;
-    public static int power = 0;
-    public static int wood = 0;
-    public static int gold = 10;
-    public static int pop = 5;
-    
-    public static boolean classTwo = true;
-    public static boolean classThree = true;
-    public static boolean diplomacy = false;
-    public static boolean economics = false;
-    
-    public static int crops = 0, livestock = 0, mills = 0, underMines = 0, quarries = 0, nuclears = 0, lumbers = 0, papers = 0, clayMines = 0, antimatters = 0, goldMines = 0, hubs = 0, lvlOnes = 0, lvlTwos = 0, lvlThrees = 0, lvlFours = 0, lvlFives = 0;
     
     public static ArrayList<Planet> planets = new ArrayList<>();
     public static ArrayList<Star> stars = new ArrayList<>();
@@ -89,10 +74,11 @@ public class MainFrame extends javax.swing.JFrame {
         civs.add(new Civ("Jack's Empire", universe.get(0), armyPanel1.playerArmy, new Color(0, 100, 255)));
         civs.add(new Civ("Ceric Order", universe.get(1), new Army("Ceric Army", 0), new Color(255, 100, 0)));
         civs.add(new Civ("Xcathli Republic", universe.get(2), new Army("Xcathli Militia", 0), new Color(0, 255, 0)));
-        civs.add(new Civ("Order of Oor", universe.get(2), new Army("Oorian Battalion", 0), new Color(255, 0, 255)));
-        civs.add(new Civ("Clan of Unspeakable Darkness", universe.get(2), new Army("Army of Unspeakable Darkness", 0), new Color(0, 255, 255)));
+        civs.add(new Civ("Order of Oor", universe.get(3), new Army("Oorian Battalion", 0), new Color(255, 0, 255)));
+        civs.add(new Civ("Clan of Unspeakable Darkness", universe.get(4), new Army("Army of Unspeakable Darkness", 0), new Color(0, 255, 255)));
         for (int i = 0; i < universe.size(); i++) {
             universe.get(i).owner = civs.get(i);
+            civs.get(i).newPlanet();
         }
     }
     /**
