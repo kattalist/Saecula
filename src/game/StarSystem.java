@@ -19,6 +19,7 @@ public class StarSystem {
 
     public Star centerStar;
     public ArrayList<Planet> system = new ArrayList<>();
+    public Civ owner;
 
     public StarSystem(int size, Star s) {
         centerStar = s;

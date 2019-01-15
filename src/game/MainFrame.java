@@ -18,6 +18,8 @@ import javax.swing.KeyStroke;
  * @author 073787251
  */
 public class MainFrame extends javax.swing.JFrame {
+    
+    public static ArrayList<Civ> civs = new ArrayList<>();
 
     public static int food = 0;
     public static int stone = 0;
@@ -57,6 +59,7 @@ public class MainFrame extends javax.swing.JFrame {
         gameBoard1.setVisible(true);
         armyPanel1.setVisible(false);
         initUniverse();
+        initCivs();
         gameBoard1.anim();
         //This code is gross
         gameBoard1.getInputMap(IFW).put(KeyStroke.getKeyStroke("LEFT"), moveLeft);
@@ -82,6 +85,16 @@ public class MainFrame extends javax.swing.JFrame {
         universe.add(new StarSystem(r.nextInt(5) + 1, new Star(r.nextInt(400) + 200, r.nextInt(400) + 1500, r.nextInt(100) + 50, new Color(r.nextInt(55) + 200, r.nextInt(255), r.nextInt(5)))));
     }
 
+    public void initCivs() {
+        civs.add(new Civ("Jack's Empire", universe.get(0), armyPanel1.playerArmy, new Color(0, 100, 255)));
+        civs.add(new Civ("Ceric Order", universe.get(1), new Army("Ceric Army", 0), new Color(255, 100, 0)));
+        civs.add(new Civ("Xcathli Republic", universe.get(2), new Army("Xcathli Militia", 0), new Color(0, 255, 0)));
+        civs.add(new Civ("Order of Oor", universe.get(2), new Army("Oorian Battalion", 0), new Color(255, 0, 255)));
+        civs.add(new Civ("Clan of Unspeakable Darkness", universe.get(2), new Army("Army of Unspeakable Darkness", 0), new Color(0, 255, 255)));
+        for (int i = 0; i < universe.size(); i++) {
+            universe.get(i).owner = civs.get(i);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

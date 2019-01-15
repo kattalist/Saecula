@@ -12,7 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import javax.swing.Timer;
 
 /**
@@ -21,7 +20,7 @@ import javax.swing.Timer;
  */
 public class ArmyPanel extends javax.swing.JPanel {
 
-    Army playerArmy = new Army("The Intergalactic Army", 0);
+    public static Army playerArmy = new Army("The Intergalactic Army", 0);
     
     //ALL SHIPS IN THE GAME
     Ship fighter1 = new Ship("Class I Fighter", 25, 30, 50, 3);

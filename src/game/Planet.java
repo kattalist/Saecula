@@ -9,7 +9,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.MouseInfo;
 import java.awt.Point;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -66,6 +65,12 @@ public class Planet {
             }
             g.setColor(terrainColor);
             g.fillOval((int) rx - (size / 2) - MainFrame.screenX, (int) ry - (size / 2) - MainFrame.screenY, size, size);
+            try {
+                g.setColor(parentSystem.owner.outlineColor);
+            } catch (NullPointerException e) {
+                g.setColor(Color.WHITE);
+            }
+            g.drawOval((int) rx - (size / 2) - MainFrame.screenX - 5, (int) ry - (size / 2) - MainFrame.screenY - 5, size + 10, size + 10);
             g.setColor(Color.red);
             g.drawOval(MouseInfo.getPointerInfo().getLocation().x - 13, MouseInfo.getPointerInfo().getLocation().y - 35, 10, 10);
             if (mousedOver(MouseInfo.getPointerInfo().getLocation(), new Point((int) rx, (int) ry))) {
