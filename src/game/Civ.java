@@ -29,8 +29,8 @@ public class Civ {
     public int gold = 10;
     public int pop = 5;
 
-    public boolean classTwo = true;
-    public boolean classThree = true;
+    public boolean classTwo = false;
+    public boolean classThree = false;
     public boolean diplomacy = false;
     public boolean economics = false;
 

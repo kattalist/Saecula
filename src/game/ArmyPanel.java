@@ -72,6 +72,7 @@ public class ArmyPanel extends javax.swing.JPanel {
         g.drawString("Size: "+playerArmy.size, 25, 225);
         g.drawString("Strength: "+playerArmy.strength(), 25, 250);
         g.drawString("Defense: "+playerArmy.defense(), 25, 275);
+        g.drawString(MainFrame.civs.get(0).gold + " credits", 600, 200); 
         g.drawString("BUY SHIPS", 25, 325);
         for (int i = 0; i < 2; i++) {
             g.setFont(g.getFont().deriveFont(12.0f));
