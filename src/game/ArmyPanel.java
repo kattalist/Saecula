@@ -23,22 +23,22 @@ public class ArmyPanel extends javax.swing.JPanel {
     public static Army playerArmy = new Army("The Intergalactic Army", 0);
     
     //ALL SHIPS IN THE GAME
-    Ship fighter1 = new Ship("Class I Fighter", 25, 30, 50, 3);
-    Ship fighter2 = new Ship("Class II Fighter", 50, 60, 150, 6);
-    Ship fighter3 = new Ship("Class III Fighter", 80, 100, 300, 10);
+    static Ship fighter1 = new Ship("Class I Fighter", 25, 30, 50, 3);
+    static Ship fighter2 = new Ship("Class II Fighter", 50, 60, 150, 6);
+    static Ship fighter3 = new Ship("Class III Fighter", 80, 100, 300, 10);
     
-    Ship cruiser1 = new Ship("Class I Cruiser", 100, 15, 150, 10);
-    Ship cruiser2 = new Ship("Class II Cruiser", 250, 30, 400, 25);
-    Ship cruiser3 = new Ship("Class III Cruiser", 400, 75, 1000, 50);
+    static Ship cruiser1 = new Ship("Class I Cruiser", 100, 15, 150, 10);
+    static Ship cruiser2 = new Ship("Class II Cruiser", 250, 30, 400, 25);
+    static Ship cruiser3 = new Ship("Class III Cruiser", 400, 75, 1000, 50);
     
-    Ship behemoth2 = new Ship("Behemoth", 500, 150, 750, 50);
-    Ship behemoth3 = new Ship("Behemoth 2.0", 800, 400, 2000, 75);
+    static Ship behemoth2 = new Ship("Behemoth", 500, 150, 750, 50);
+    static Ship behemoth3 = new Ship("Behemoth 2.0", 800, 400, 2000, 75);
     
-    Ship nuclear = new Ship("BND-500", 300, 200, 850, 30);
-    Ship antimatter = new Ship("CHAD-9000", 999, 999, 5000, 150);
+    static Ship nuclear = new Ship("BND-500", 300, 200, 850, 30);
+    static Ship antimatter = new Ship("CHAD-9000", 999, 999, 5000, 150);
     //CHAD stands for Carbon-Hydrogen Antimatter Device
 
-    Ship[] store = {fighter1,cruiser1,fighter2,cruiser2,behemoth2,nuclear,fighter3,cruiser3,behemoth3,antimatter};
+    public static Ship[] store = {fighter1,cruiser1,fighter2,cruiser2,behemoth2,nuclear,fighter3,cruiser3,behemoth3,antimatter};
     /**
      * Creates new form ArmyPanel
      */

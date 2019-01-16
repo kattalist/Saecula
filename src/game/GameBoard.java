@@ -40,7 +40,7 @@ public class GameBoard extends javax.swing.JPanel {
                             double xDiff = Math.abs(cx - p.parent.x);
                             double yDiff = Math.abs(cy - p.parent.y);
                             double dist = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
-                            if (p.mousedOver(MouseInfo.getPointerInfo().getLocation(), new Point((int) (p.parent.x - Math.cos(Math.toRadians(p.orbitAngle - 90)) * dist), (int) (p.parent.y - Math.sin(Math.toRadians(p.orbitAngle - 90)) * dist))) && p.parentSystem.owner == MainFrame.civs.get(0)) {
+                            if (p.mousedOver(MouseInfo.getPointerInfo().getLocation(), new Point((int) (p.parent.x - Math.cos(Math.toRadians(p.orbitAngle - 90)) * dist), (int) (p.parent.y - Math.sin(Math.toRadians(p.orbitAngle - 90)) * dist)))) {
                                 p.clicked = true;
                                 Planet.clickedPlanet = p;
                             }
@@ -62,63 +62,6 @@ public class GameBoard extends javax.swing.JPanel {
                                 MainFrame.civs.get(0).useTile(Tile.clickedTile, 2);
                                 Tile.clickedTile = null;
                             } else if (MouseInfo.getPointerInfo().getLocation().y - 35 <= 700 && MouseInfo.getPointerInfo().getLocation().y - 35 >= 600) {
-                                /*switch (Tile.clickedTile.type) {
-                                    case 0:
-                                        if (MainFrame.gold >= 5) {
-                                            Tile.clickedTile.usage = 3;
-                                            MainFrame.gold -= 5;
-                                            MainFrame.livestock++;
-                                        }
-                                        break;
-                                    case 1:
-                                        if (MainFrame.stone >= 5) {
-                                            Tile.clickedTile.usage = 2;
-                                            MainFrame.stone -= 5;
-                                            MainFrame.underMines++;
-                                        } else if (MainFrame.bricks >= 5) {
-                                            Tile.clickedTile.usage = 3;
-                                            MainFrame.bricks -= 5;
-                                            MainFrame.underMines++;
-                                        }
-                                        break;
-                                    case 2:
-                                        if (MainFrame.gold >= 5) {
-                                            Tile.clickedTile.usage = 3;
-                                            MainFrame.gold -= 5;
-                                            MainFrame.nuclears++;
-                                            MainFrame.classTwo = true;
-                                        }
-                                        break;
-                                    case 3:
-                                        if (MainFrame.stone >= 5) {
-                                            Tile.clickedTile.usage = 2;
-                                            MainFrame.stone -= 5;
-                                            MainFrame.papers++;
-                                            MainFrame.diplomacy = true;
-                                        } else if (MainFrame.bricks >= 5) {
-                                            Tile.clickedTile.usage = 3;
-                                            MainFrame.bricks -= 5;
-                                            MainFrame.papers++;
-                                            MainFrame.diplomacy = true;
-                                        }
-                                        break;
-                                    case 4:
-                                        if (MainFrame.gold >= 20) {
-                                            Tile.clickedTile.usage = 3;
-                                            MainFrame.gold -= 20;
-                                            MainFrame.antimatters++;
-                                            MainFrame.classThree = true;
-                                        }
-                                        break;
-                                    case 5:
-                                        if (MainFrame.gold >= 3) {
-                                            Tile.clickedTile.usage = 3;
-                                            MainFrame.gold -= 3;
-                                            MainFrame.hubs++;
-                                            MainFrame.economics = true;
-                                        }
-                                        break;
-                                }*/
                                 MainFrame.civs.get(0).useTile(Tile.clickedTile, 3);
                                 Tile.clickedTile = null;
                             }
@@ -182,6 +125,9 @@ public class GameBoard extends javax.swing.JPanel {
         @Override
         public void actionPerformed(ActionEvent ae) {
             for (Civ c : MainFrame.civs) {
+                if (c != MainFrame.civs.get(0)) {
+                    c.performAction();
+                }
                 int pfood = c.food, pgold = c.gold, ppower = c.power, pstone = c.stone, pbricks = c.bricks, pwood = c.wood, ppop = c.pop;
                 //CROP FARMS
                 c.food += (c.crops * 5);

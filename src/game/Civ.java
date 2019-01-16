@@ -37,7 +37,7 @@ public class Civ {
     public int crops = 0, livestock = 0, mills = 0, underMines = 0, quarries = 0, nuclears = 0, lumbers = 0, papers = 0, clayMines = 0, antimatters = 0, goldMines = 0, hubs = 0, lvlOnes = 0, lvlTwos = 0, lvlThrees = 0, lvlFours = 0, lvlFives = 0;
 
     public int foodDiff = 0, stoneDiff = 0, brickDiff = 0, powerDiff = 0, woodDiff = 0, goldDiff = 0, popDiff = 0;
-    
+
     public Civ(String name, StarSystem home, Army army, Color outlineColor) {
         this.name = name;
         this.home = home;
@@ -50,31 +50,98 @@ public class Civ {
         ArrayList<Planet> options = new ArrayList<>();
         for (StarSystem s : MainFrame.universe) {
             if (s.owner == this) {
-                options.add(s.system.get(r.nextInt(s.system.size())));
+                int i = r.nextInt(s.system.size());
+                options.add(s.system.get(i));
             }
         }
         activePlanet = options.get(r.nextInt(options.size()));
+        activePlanet.genBoard();
     }
 
     public void performAction() {
+        Random rndmSeed = new Random();
+        int turnSeed = rndmSeed.nextInt(100);
         //AI will develop in this order: farm --> lumber --> gold mine --> quarry --> mill --> colony
         //1 farm per lumber + mine
-        if (crops <= 0 || crops < lumbers || crops < goldMines || crops < quarries || crops < clayMines || crops < underMines) {
+        if (crops <= 0 || crops < lumbers || crops < goldMines || crops < quarries || crops < clayMines || crops < underMines || foodDiff <= 0) {
             for (Tile t : activePlanet.planetBoard) {
                 if (t.usage == 0 && t.type == 0 && gold >= 5) {
-                    useTile(t, 2);
+                    if (gold >= 15 && turnSeed < 15) {
+                        useTile(t, 3);
+                    } else {
+                        useTile(t, 2);
+                    }
+                    break;
                 }
             }
         } else if (lumbers <= 0) {
             for (Tile t : activePlanet.planetBoard) {
                 if (t.usage == 0 && t.type == 3) {
-                    useTile(t, 2);
+                    if (!diplomacy && turnSeed < 20) {
+                        useTile(t, 3);
+                    } else {
+                        useTile(t, 2);
+                    }
+                    break;
                 }
+            }
+        }
+        if (goldDiff <= 0 || goldMines <= 0 || gold <= 0) {
+            for (Tile t : activePlanet.planetBoard) {
+                if (t.usage == 0 && t.type == 5) {
+                    useTile(t, 2);
+                    break;
+                }
+            }
+        } else if ((stoneDiff <= 0 || quarries <= 0 || stone <= 0) && turnSeed < 65) {
+            for (Tile t : activePlanet.planetBoard) {
+                if (t.usage == 0 && t.type == 2) {
+                    if (!classTwo && powerDiff >= 10 && turnSeed > 70) {
+                        useTile(t, 3);
+                    } else {
+                        useTile(t, 2);
+                    }
+                    break;
+                }
+            }
+        } else if ((brickDiff <= 0 || clayMines <= 0 || bricks <= 0) && turnSeed > 65) {
+            for (Tile t : activePlanet.planetBoard) {
+                if (t.usage == 0 && t.type == 4) {
+                    if (!classTwo && powerDiff >= 20 && turnSeed > 80) {
+                        useTile(t, 3);
+                    } else {
+                        useTile(t, 2);
+                    }
+                    break;
+                }
+            }
+        } else if (powerDiff <= 0 || mills <= 0 || power <= 0) {
+            for (Tile t : activePlanet.planetBoard) {
+                if (t.usage == 0 && t.type == 1) {
+                    useTile(t, 2);
+                    break;
+                }
+            }
+        }
+        if (foodDiff >= 2 && powerDiff >= 3) {
+            Tile t = activePlanet.planetBoard.get(rndmSeed.nextInt(144));
+            if (t.usage == 0) {
+                useTile (t, 1);
+            }
+        }
+        //Lastly, buy ships for army
+        for (int i = ArmyPanel.store.length - 1; i > 0; i--) {
+            Ship s = ArmyPanel.store[i];
+            if (gold >= s.cost && pop >= s.crew) {
+                gold -= s.cost;
+                army.fleet.add(s);
+                System.out.println(name + " bought a "+ s.name);
             }
         }
     }
 
     public void useTile(Tile t, int currentUse) {
+        System.out.println(name + " ran a useTile method!");
         if (currentUse == 1) {
             if (t.usage == 1) {
                 if (t.colonyLevel < 5) {
@@ -227,5 +294,6 @@ public class Civ {
                     break;
             }
         }
+        System.out.println(name + ": " + gold + " credits, " + food + " food, " + stone + " stone, " + bricks + " bricks, " + power + " power, " + wood + " wood, " + pop + " people, ");
     }
 }

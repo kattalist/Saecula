@@ -61,7 +61,9 @@ public class Tile {
         if (usage == 0) {
             g.setFont(g.getFont().deriveFont(24.0f));
             g.drawString("This tile is currently unused! Please select an option from below.", 60, 100);
-            g.drawString("Colonize this tile (-5 credits)", 250, 256);
+            g.setFont(g.getFont().deriveFont(16.0f));
+            g.drawString("Colonize this tile (-5 credits)", 250, 245);
+            g.drawString("+2 population/min, +3 gold/min, -2 food/min, -5 power/min", 250, 271);
             g.setFont(g.getFont().deriveFont(16.0f));
             switch (type) {
                 case 0:
