@@ -20,6 +20,8 @@ public class Civ {
     Army army;
     Color outlineColor;
     Planet activePlanet;
+    
+    public boolean gameOver = false;
 
     public int food = 0;
     public int stone = 0;
@@ -136,6 +138,54 @@ public class Civ {
                 if ((t.colonyLevel == 1 && powerDiff >= 10) || (t.colonyLevel == 2 && powerDiff >= 15) || (t.colonyLevel == 3 && powerDiff >= 25) || (t.colonyLevel == 4 && powerDiff >= 50)) {
                     useTile(u, 1);
                 }
+            }
+        }
+        if (!classTwo && gold >= 75) {
+            for (Tile t : activePlanet.planetBoard) {
+                if (t.usage == 0 && t.type == 2) {
+                    useTile(t, 3);
+                    idleTurn = false;
+                    break;
+                }
+            }
+            if (classTwo) {
+                System.out.println(name + "has unlocked Class II weaponry!");
+            }
+        }
+        if (!classThree && gold >= 150) {
+            for (Tile t : activePlanet.planetBoard) {
+                if (t.usage == 0 && t.type == 4) {
+                    useTile(t, 3);
+                    idleTurn = false;
+                    break;
+                }
+            }
+            if (classThree) {
+                System.out.println(name + "has unlocked Class III weaponry!");
+            }
+        }
+        if (!diplomacy && gold >= 50) {
+            for (Tile t : activePlanet.planetBoard) {
+                if (t.usage == 0 && t.type == 3) {
+                    useTile(t, 3);
+                    idleTurn = false;
+                    break;
+                }
+            }
+            if (diplomacy) {
+                System.out.println(name + "has unlocked Diplomacy!");
+            }
+        }
+        if (!economics && gold >= 50) {
+            for (Tile t : activePlanet.planetBoard) {
+                if (t.usage == 0 && t.type == 5) {
+                    useTile(t, 3);
+                    idleTurn = false;
+                    break;
+                }
+            }
+            if (economics) {
+                System.out.println(name + "has unlocked Economics!");
             }
         }
         if (idleTurn) {

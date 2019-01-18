@@ -104,12 +104,12 @@ public class Planet {
                     Graphics2D g2 = (Graphics2D) g;
                     g2.setColor(parentSystem.owner.outlineColor);
                     g2.setStroke(new BasicStroke(2));
-                    g2.drawRect(t.x,t.y,49,49);
+                    g2.drawRect(t.x, t.y, 49, 49);
                 }
             }
             g.setColor(Color.WHITE);
             Point p = MouseInfo.getPointerInfo().getLocation();
-            if (p.x - 13 < 600 && p.y  - 35 < 600) {
+            if (p.x - 13 < 600 && p.y - 35 < 600) {
                 g.drawRect(p.x - 14 - (p.x - 13) % 50, p.y - 36 - (p.y - 35) % 50, 50, 50);
             }
             try {

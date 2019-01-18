@@ -21,6 +21,7 @@ import javax.swing.Timer;
  */
 public class GameBoard extends javax.swing.JPanel {
 
+    public boolean interacting = false;
     public static int foodDiff = 0, stoneDiff = 0, brickDiff = 0, powerDiff = 0, woodDiff = 0, goldDiff = 0, popDiff = 0;
 
     /**
@@ -43,6 +44,9 @@ public class GameBoard extends javax.swing.JPanel {
                             if (p.mousedOver(MouseInfo.getPointerInfo().getLocation(), new Point((int) (p.parent.x - Math.cos(Math.toRadians(p.orbitAngle - 90)) * dist), (int) (p.parent.y - Math.sin(Math.toRadians(p.orbitAngle - 90)) * dist)))) {
                                 p.clicked = true;
                                 Planet.clickedPlanet = p;
+                                if (p.parentSystem.owner != MainFrame.civs.get(0)) {
+                                    interacting = true;
+                                }
                             }
                         }
                     }
@@ -80,31 +84,75 @@ public class GameBoard extends javax.swing.JPanel {
     }
 
     public void drawBoard(Graphics g) {
-        if (Tile.clickedTile != null) {
-            Tile.clickedTile.displayClickedScreen(g);
+        if (interacting) {
+            alienInteraction(Planet.clickedPlanet.parentSystem.owner, g);
         } else {
-            for (StarSystem s : MainFrame.universe) {
-                s.display(g);
-            }
-        }
-        if (Planet.clickedPlanet != null && Tile.clickedTile == null) {
-            String[] lines = {MainFrame.civs.get(0).gold + " credits", MainFrame.civs.get(0).food + " food", MainFrame.civs.get(0).stone + " stone", MainFrame.civs.get(0).bricks + " bricks", MainFrame.civs.get(0).power + " power", MainFrame.civs.get(0).wood + " wood", MainFrame.civs.get(0).pop + " people"};
-            int[] diffs = {MainFrame.civs.get(0).goldDiff, MainFrame.civs.get(0).foodDiff, MainFrame.civs.get(0).stoneDiff, MainFrame.civs.get(0).brickDiff, MainFrame.civs.get(0).powerDiff, MainFrame.civs.get(0).woodDiff, MainFrame.civs.get(0).popDiff};
-            g.setColor(Color.WHITE);
-            g.setFont(g.getFont().deriveFont(18.0f));
-            for (int i = 0; i < lines.length; i++) {
-                g.setColor(Color.WHITE);
-                g.drawString(lines[i], 650, i * 25 + 50);
-                if (diffs[i] > 0) {
-                    g.setColor(Color.GREEN);
-                    g.drawString("\u25B2" + diffs[i], 600, i * 25 + 50);
-                } else if (diffs[i] < 0) {
-                    g.setColor(Color.RED);
-                    g.drawString("\u25BC" + Math.abs(diffs[i]), 600, i * 25 + 50);
+            if (Tile.clickedTile != null) {
+                Tile.clickedTile.displayClickedScreen(g);
+            } else {
+                for (StarSystem s : MainFrame.universe) {
+                    s.display(g);
+                    if (s.owner != MainFrame.civs.get(0)) {
+                        g.setColor(s.owner.outlineColor);
+                        int[] xPoints = {s.centerStar.x - MainFrame.screenX - 30, s.centerStar.x - MainFrame.screenX, s.centerStar.x - MainFrame.screenX - 30};
+                        int[] yPoints = {s.centerStar.y - MainFrame.screenY - 30, s.centerStar.y - MainFrame.screenY, s.centerStar.y - MainFrame.screenY + 30};
+                        if (s.centerStar.x - MainFrame.screenX > 800) {
+                            xPoints[0] = 770;
+                            xPoints[1] = 800;
+                            xPoints[2] = 770;
+                            g.drawPolyline(xPoints, yPoints, 3);
+                        } else if (s.centerStar.x - MainFrame.screenX < 0) {
+                            xPoints[0] = 30;
+                            xPoints[1] = 0;
+                            xPoints[2] = 30;
+                            g.drawPolyline(xPoints, yPoints, 3);
+                        } else if (s.centerStar.y - MainFrame.screenY < 0) {
+                            xPoints[0] = s.centerStar.x - MainFrame.screenX - 30;
+                            xPoints[1] = s.centerStar.x - MainFrame.screenX;
+                            xPoints[2] = s.centerStar.x - MainFrame.screenX + 30;
+                            yPoints[0] = 30;
+                            yPoints[1] = 0;
+                            yPoints[2] = 30;
+                            g.drawPolyline(xPoints, yPoints, 3);
+                        } else if (s.centerStar.y - MainFrame.screenY > 800) {
+                            xPoints[0] = s.centerStar.x - MainFrame.screenX - 30;
+                            xPoints[1] = s.centerStar.x - MainFrame.screenX;
+                            xPoints[2] = s.centerStar.x - MainFrame.screenX + 30;
+                            yPoints[0] = 733;
+                            yPoints[1] = 763;
+                            yPoints[2] = 733;
+                            g.drawPolyline(xPoints, yPoints, 3);
+                        }
+                    }
                 }
             }
-            g.drawString(MainFrame.civs.get(0).unrest + " unrest", 600, 600);
+            if (Planet.clickedPlanet != null && Tile.clickedTile == null) {
+                String[] lines = {MainFrame.civs.get(0).gold + " credits", MainFrame.civs.get(0).food + " food", MainFrame.civs.get(0).stone + " stone", MainFrame.civs.get(0).bricks + " bricks", MainFrame.civs.get(0).power + " power", MainFrame.civs.get(0).wood + " wood", MainFrame.civs.get(0).pop + " people"};
+                int[] diffs = {MainFrame.civs.get(0).goldDiff, MainFrame.civs.get(0).foodDiff, MainFrame.civs.get(0).stoneDiff, MainFrame.civs.get(0).brickDiff, MainFrame.civs.get(0).powerDiff, MainFrame.civs.get(0).woodDiff, MainFrame.civs.get(0).popDiff};
+                g.setColor(Color.WHITE);
+                g.setFont(g.getFont().deriveFont(18.0f));
+                for (int i = 0; i < lines.length; i++) {
+                    g.setColor(Color.WHITE);
+                    g.drawString(lines[i], 650, i * 25 + 50);
+                    if (diffs[i] > 0) {
+                        g.setColor(Color.GREEN);
+                        g.drawString("\u25B2" + diffs[i], 600, i * 25 + 50);
+                    } else if (diffs[i] < 0) {
+                        g.setColor(Color.RED);
+                        g.drawString("\u25BC" + Math.abs(diffs[i]), 600, i * 25 + 50);
+                    }
+                }
+                g.setColor(Color.WHITE);
+                g.drawString("Unrest :", 100, 700);
+                g.setColor(Color.RED);
+                g.fillRect(200, 682, (int) MainFrame.civs.get(0).unrest, 18);
+            }
         }
+    }
+
+    public void alienInteraction(Civ alien, Graphics g) {
+        g.setColor(Color.WHITE);
+        g.drawString("You are now interacting with The "+ alien.name, 100, 100);
     }
 
     @Override
@@ -117,9 +165,12 @@ public class GameBoard extends javax.swing.JPanel {
 
         @Override
         public void actionPerformed(ActionEvent ae) {
-            for (Civ c: MainFrame.civs) {
+            for (Civ c : MainFrame.civs) {
                 if (c.food < 0 || c.gold < 0 || c.power < 0) {
                     c.unrest += 0.1;
+                }
+                if (c.unrest >= 100) {
+                    c.gameOver = true;
                 }
             }
             repaint();
@@ -167,7 +218,7 @@ public class GameBoard extends javax.swing.JPanel {
                 c.food -= (c.goldMines * 3);
                 //TRADE HUBS
                 c.food -= (c.hubs * 3);
-            //COLONIES
+                //COLONIES
                 //LVL 1
                 c.pop += (c.lvlOnes * 2);
                 c.pop += (c.lvlTwos * 4);

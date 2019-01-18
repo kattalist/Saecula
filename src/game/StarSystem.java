@@ -40,7 +40,7 @@ public class StarSystem {
             if (Planet.clickedPlanet != null) {
                 Planet.clickedPlanet.drawBoard(g);
             } else {
-                p.display(g2);
+                p.display(g);
             }
         }
         if (Planet.clickedPlanet == null) {
