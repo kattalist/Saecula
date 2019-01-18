@@ -28,6 +28,7 @@ public class Civ {
     public int wood = 0;
     public int gold = 10;
     public int pop = 5;
+    public double unrest = 0;
 
     public boolean classTwo = false;
     public boolean classThree = false;

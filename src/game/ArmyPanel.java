@@ -87,7 +87,7 @@ public class ArmyPanel extends javax.swing.JPanel {
         }
         for (int i = 0; i < defs.length; i++) {
             for (Civ c : MainFrame.civs) {
-                if (c.army.strength() == strs[i]) {
+                if (c.army.defense() == defs[i]) {
                     defIndexes[i] = MainFrame.civs.indexOf(c);
                 }
             }
@@ -102,7 +102,8 @@ public class ArmyPanel extends javax.swing.JPanel {
         for (int i = strs.length - 1; i >= 0; i--) {
             g.setColor(MainFrame.civs.get(strIndexes[i]).outlineColor);
             g.fillRect(150, 234, MainFrame.civs.get(strIndexes[i]).army.strength(), 16);
-            g.fillRect(150, 259, MainFrame.civs.get(strIndexes[i]).army.strength(), 16);
+            g.setColor(MainFrame.civs.get(defIndexes[i]).outlineColor);
+            g.fillRect(150, 259, MainFrame.civs.get(defIndexes[i]).army.defense(), 16);
         }
         g.setColor(Color.WHITE);
         g.drawString("Defense: " + playerArmy.defense(), 25, 275);

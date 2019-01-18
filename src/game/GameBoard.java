@@ -103,6 +103,7 @@ public class GameBoard extends javax.swing.JPanel {
                     g.drawString("\u25BC" + Math.abs(diffs[i]), 600, i * 25 + 50);
                 }
             }
+            g.drawString(MainFrame.civs.get(0).unrest + " unrest", 600, 600);
         }
     }
 
@@ -116,6 +117,11 @@ public class GameBoard extends javax.swing.JPanel {
 
         @Override
         public void actionPerformed(ActionEvent ae) {
+            for (Civ c: MainFrame.civs) {
+                if (c.food < 0 || c.gold < 0 || c.power < 0) {
+                    c.unrest += 0.1;
+                }
+            }
             repaint();
         }
     }
