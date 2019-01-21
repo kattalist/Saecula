@@ -99,10 +99,20 @@ public class ArmyPanel extends javax.swing.JPanel {
         g.drawString("Size: " + playerArmy.size, 25, 225);
         g.drawString("Strength: " + playerArmy.strength(), 25, 250);
         for (int i = strs.length - 1; i >= 0; i--) {
-            g.setColor(MainFrame.civs.get(strIndexes[i]).outlineColor);
-            g.fillRect(150, 234, MainFrame.civs.get(strIndexes[i]).army.strength(), 16);
-            g.setColor(MainFrame.civs.get(defIndexes[i]).outlineColor);
-            g.fillRect(150, 259, MainFrame.civs.get(defIndexes[i]).army.defense(), 16);
+            if (MainFrame.civs.get(strIndexes[4]).army.strength() > 550) {
+                g.setColor(MainFrame.civs.get(strIndexes[i]).outlineColor);
+                g.fillRect(150, 234, MainFrame.civs.get(strIndexes[i]).army.strength() / MainFrame.civs.get(strIndexes[4]).army.strength() * 550, 16);
+            } else {
+                g.setColor(MainFrame.civs.get(strIndexes[i]).outlineColor);
+                g.fillRect(150, 234, MainFrame.civs.get(strIndexes[i]).army.strength(), 16);
+            }
+            if (MainFrame.civs.get(defIndexes[4]).army.defense() > 550) {
+                g.setColor(MainFrame.civs.get(defIndexes[i]).outlineColor);
+                g.fillRect(150, 259, MainFrame.civs.get(defIndexes[i]).army.defense() / MainFrame.civs.get(defIndexes[4]).army.defense() * 550, 16);
+            } else {
+                g.setColor(MainFrame.civs.get(defIndexes[i]).outlineColor);
+                g.fillRect(150, 259, MainFrame.civs.get(defIndexes[i]).army.defense(), 16);
+            }
         }
         g.setColor(Color.WHITE);
         g.drawString("Defense: " + playerArmy.defense(), 25, 275);

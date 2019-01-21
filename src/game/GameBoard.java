@@ -21,9 +21,10 @@ import javax.swing.Timer;
  */
 public class GameBoard extends javax.swing.JPanel {
 
+    //The variable that determines if the player is currently interacting with an alien race.
     public boolean interacting = false;
-    public static int foodDiff = 0, stoneDiff = 0, brickDiff = 0, powerDiff = 0, woodDiff = 0, goldDiff = 0, popDiff = 0;
 
+    public int clickedX = 0, clickedY = 0;
     /**
      * Creates new form GameBoard
      */
@@ -33,41 +34,48 @@ public class GameBoard extends javax.swing.JPanel {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (Planet.clickedPlanet == null) {
-                    for (StarSystem s : MainFrame.universe) {
-                        for (Planet p : s.system) {
-                            double cx = p.x + (p.size / 2);
-                            double cy = p.y + (p.size / 2);
-                            double xDiff = Math.abs(cx - p.parent.x);
-                            double yDiff = Math.abs(cy - p.parent.y);
-                            double dist = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
-                            if (p.mousedOver(MouseInfo.getPointerInfo().getLocation(), new Point((int) (p.parent.x - Math.cos(Math.toRadians(p.orbitAngle - 90)) * dist), (int) (p.parent.y - Math.sin(Math.toRadians(p.orbitAngle - 90)) * dist)))) {
-                                p.clicked = true;
-                                Planet.clickedPlanet = p;
-                                if (p.parentSystem.owner != MainFrame.civs.get(0)) {
-                                    interacting = true;
+                if (interacting) {
+                    if (MouseInfo.getPointerInfo().getLocation().x - 13 >= 25 && MouseInfo.getPointerInfo().getLocation().x - 13 <= 200 && MouseInfo.getPointerInfo().getLocation().y - 35 >= 134 && MouseInfo.getPointerInfo().getLocation().y - 35 < 210) {
+                        clickedX = 4;
+                        clickedY = MouseInfo.getPointerInfo().getLocation().y - 35 - (MouseInfo.getPointerInfo().getLocation().y - 35) % 30 + 16;
+                    }
+                } else {
+                    if (Planet.clickedPlanet == null) {
+                        for (StarSystem s : MainFrame.universe) {
+                            for (Planet p : s.system) {
+                                double cx = p.x + (p.size / 2);
+                                double cy = p.y + (p.size / 2);
+                                double xDiff = Math.abs(cx - p.parent.x);
+                                double yDiff = Math.abs(cy - p.parent.y);
+                                double dist = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
+                                if (p.mousedOver(MouseInfo.getPointerInfo().getLocation(), new Point((int) (p.parent.x - Math.cos(Math.toRadians(p.orbitAngle - 90)) * dist), (int) (p.parent.y - Math.sin(Math.toRadians(p.orbitAngle - 90)) * dist)))) {
+                                    p.clicked = true;
+                                    Planet.clickedPlanet = p;
+                                    if (p.parentSystem.owner != MainFrame.civs.get(0)) {
+                                        interacting = true;
+                                    }
                                 }
                             }
                         }
-                    }
-                } else {
-                    if (Tile.clickedTile == null) {
-                        for (Tile t : Planet.clickedPlanet.planetBoard) {
-                            if (((MouseInfo.getPointerInfo().getLocation().x - 13) - ((MouseInfo.getPointerInfo().getLocation().x - 13) % 50) == t.x) && ((MouseInfo.getPointerInfo().getLocation().y - 35) - ((MouseInfo.getPointerInfo().getLocation().y - 35) % 50) == t.y)) {
-                                Tile.clickedTile = t;
-                            }
-                        }
                     } else {
-                        if (MouseInfo.getPointerInfo().getLocation().x - 13 >= 100 && MouseInfo.getPointerInfo().getLocation().x - 13 <= 600) {
-                            if (MouseInfo.getPointerInfo().getLocation().y - 35 <= 300 && MouseInfo.getPointerInfo().getLocation().y - 35 >= 200) {
-                                MainFrame.civs.get(0).useTile(Tile.clickedTile, 1);
-                                Tile.clickedTile = null;
-                            } else if (MouseInfo.getPointerInfo().getLocation().y - 35 <= 500 && MouseInfo.getPointerInfo().getLocation().y - 35 >= 400) {
-                                MainFrame.civs.get(0).useTile(Tile.clickedTile, 2);
-                                Tile.clickedTile = null;
-                            } else if (MouseInfo.getPointerInfo().getLocation().y - 35 <= 700 && MouseInfo.getPointerInfo().getLocation().y - 35 >= 600) {
-                                MainFrame.civs.get(0).useTile(Tile.clickedTile, 3);
-                                Tile.clickedTile = null;
+                        if (Tile.clickedTile == null) {
+                            for (Tile t : Planet.clickedPlanet.planetBoard) {
+                                if (((MouseInfo.getPointerInfo().getLocation().x - 13) - ((MouseInfo.getPointerInfo().getLocation().x - 13) % 50) == t.x) && ((MouseInfo.getPointerInfo().getLocation().y - 35) - ((MouseInfo.getPointerInfo().getLocation().y - 35) % 50) == t.y)) {
+                                    Tile.clickedTile = t;
+                                }
+                            }
+                        } else {
+                            if (MouseInfo.getPointerInfo().getLocation().x - 13 >= 100 && MouseInfo.getPointerInfo().getLocation().x - 13 <= 600) {
+                                if (MouseInfo.getPointerInfo().getLocation().y - 35 <= 300 && MouseInfo.getPointerInfo().getLocation().y - 35 >= 200) {
+                                    MainFrame.civs.get(0).useTile(Tile.clickedTile, 1);
+                                    Tile.clickedTile = null;
+                                } else if (MouseInfo.getPointerInfo().getLocation().y - 35 <= 500 && MouseInfo.getPointerInfo().getLocation().y - 35 >= 400) {
+                                    MainFrame.civs.get(0).useTile(Tile.clickedTile, 2);
+                                    Tile.clickedTile = null;
+                                } else if (MouseInfo.getPointerInfo().getLocation().y - 35 <= 700 && MouseInfo.getPointerInfo().getLocation().y - 35 >= 600) {
+                                    MainFrame.civs.get(0).useTile(Tile.clickedTile, 3);
+                                    Tile.clickedTile = null;
+                                }
                             }
                         }
                     }
@@ -84,75 +92,134 @@ public class GameBoard extends javax.swing.JPanel {
     }
 
     public void drawBoard(Graphics g) {
-        if (interacting) {
-            alienInteraction(Planet.clickedPlanet.parentSystem.owner, g);
+        if (MainFrame.civs.get(0).gameOver) {
+            Tile.clickedTile = null;
+            Planet.clickedPlanet = null;
+            setBackground(Color.RED);
+            g.setColor(Color.WHITE);
+            g.setFont(g.getFont().deriveFont(50.0f));
+            g.drawString("YOU LOSE!", 25, 100);
+            g.setFont(g.getFont().deriveFont(18.0f));
         } else {
-            if (Tile.clickedTile != null) {
-                Tile.clickedTile.displayClickedScreen(g);
+            if (interacting) {
+                alienInteraction(Planet.clickedPlanet.parentSystem.owner, g);
             } else {
-                for (StarSystem s : MainFrame.universe) {
-                    s.display(g);
-                    if (s.owner != MainFrame.civs.get(0)) {
-                        g.setColor(s.owner.outlineColor);
-                        int[] xPoints = {s.centerStar.x - MainFrame.screenX - 30, s.centerStar.x - MainFrame.screenX, s.centerStar.x - MainFrame.screenX - 30};
-                        int[] yPoints = {s.centerStar.y - MainFrame.screenY - 30, s.centerStar.y - MainFrame.screenY, s.centerStar.y - MainFrame.screenY + 30};
-                        if (s.centerStar.x - MainFrame.screenX > 800) {
-                            xPoints[0] = 770;
-                            xPoints[1] = 800;
-                            xPoints[2] = 770;
-                            g.drawPolyline(xPoints, yPoints, 3);
-                        } else if (s.centerStar.x - MainFrame.screenX < 0) {
-                            xPoints[0] = 30;
-                            xPoints[1] = 0;
-                            xPoints[2] = 30;
-                            g.drawPolyline(xPoints, yPoints, 3);
-                        } else if (s.centerStar.y - MainFrame.screenY < 0) {
-                            xPoints[0] = s.centerStar.x - MainFrame.screenX - 30;
-                            xPoints[1] = s.centerStar.x - MainFrame.screenX;
-                            xPoints[2] = s.centerStar.x - MainFrame.screenX + 30;
-                            yPoints[0] = 30;
-                            yPoints[1] = 0;
-                            yPoints[2] = 30;
-                            g.drawPolyline(xPoints, yPoints, 3);
-                        } else if (s.centerStar.y - MainFrame.screenY > 800) {
-                            xPoints[0] = s.centerStar.x - MainFrame.screenX - 30;
-                            xPoints[1] = s.centerStar.x - MainFrame.screenX;
-                            xPoints[2] = s.centerStar.x - MainFrame.screenX + 30;
-                            yPoints[0] = 733;
-                            yPoints[1] = 763;
-                            yPoints[2] = 733;
-                            g.drawPolyline(xPoints, yPoints, 3);
+                if (Tile.clickedTile != null) {
+                    Tile.clickedTile.displayClickedScreen(g);
+                } else {
+                    for (StarSystem s : MainFrame.universe) {
+                        s.display(g);
+                        if (s.owner != MainFrame.civs.get(0)) {
+                            g.setColor(s.owner.outlineColor);
+                            int[] xPoints = {s.centerStar.x - MainFrame.screenX - 30, s.centerStar.x - MainFrame.screenX, s.centerStar.x - MainFrame.screenX - 30};
+                            int[] yPoints = {s.centerStar.y - MainFrame.screenY - 30, s.centerStar.y - MainFrame.screenY, s.centerStar.y - MainFrame.screenY + 30};
+                            if (s.centerStar.x - MainFrame.screenX > 800) {
+                                xPoints[0] = 770;
+                                xPoints[1] = 800;
+                                xPoints[2] = 770;
+                                g.drawPolyline(xPoints, yPoints, 3);
+                            } else if (s.centerStar.x - MainFrame.screenX < 0) {
+                                xPoints[0] = 30;
+                                xPoints[1] = 0;
+                                xPoints[2] = 30;
+                                g.drawPolyline(xPoints, yPoints, 3);
+                            } else if (s.centerStar.y - MainFrame.screenY < 0) {
+                                xPoints[0] = s.centerStar.x - MainFrame.screenX - 30;
+                                xPoints[1] = s.centerStar.x - MainFrame.screenX;
+                                xPoints[2] = s.centerStar.x - MainFrame.screenX + 30;
+                                yPoints[0] = 30;
+                                yPoints[1] = 0;
+                                yPoints[2] = 30;
+                                g.drawPolyline(xPoints, yPoints, 3);
+                            } else if (s.centerStar.y - MainFrame.screenY > 800) {
+                                xPoints[0] = s.centerStar.x - MainFrame.screenX - 30;
+                                xPoints[1] = s.centerStar.x - MainFrame.screenX;
+                                xPoints[2] = s.centerStar.x - MainFrame.screenX + 30;
+                                yPoints[0] = 733;
+                                yPoints[1] = 763;
+                                yPoints[2] = 733;
+                                g.drawPolyline(xPoints, yPoints, 3);
+                            }
                         }
                     }
                 }
-            }
-            if (Planet.clickedPlanet != null && Tile.clickedTile == null) {
-                String[] lines = {MainFrame.civs.get(0).gold + " credits", MainFrame.civs.get(0).food + " food", MainFrame.civs.get(0).stone + " stone", MainFrame.civs.get(0).bricks + " bricks", MainFrame.civs.get(0).power + " power", MainFrame.civs.get(0).wood + " wood", MainFrame.civs.get(0).pop + " people"};
-                int[] diffs = {MainFrame.civs.get(0).goldDiff, MainFrame.civs.get(0).foodDiff, MainFrame.civs.get(0).stoneDiff, MainFrame.civs.get(0).brickDiff, MainFrame.civs.get(0).powerDiff, MainFrame.civs.get(0).woodDiff, MainFrame.civs.get(0).popDiff};
-                g.setColor(Color.WHITE);
-                g.setFont(g.getFont().deriveFont(18.0f));
-                for (int i = 0; i < lines.length; i++) {
+                if (Planet.clickedPlanet != null && Tile.clickedTile == null) {
+                    String[] lines = {MainFrame.civs.get(0).gold + " credits", MainFrame.civs.get(0).food + " food", MainFrame.civs.get(0).stone + " stone", MainFrame.civs.get(0).bricks + " bricks", MainFrame.civs.get(0).power + " power", MainFrame.civs.get(0).wood + " wood", MainFrame.civs.get(0).pop + " people"};
+                    int[] diffs = {MainFrame.civs.get(0).goldDiff, MainFrame.civs.get(0).foodDiff, MainFrame.civs.get(0).stoneDiff, MainFrame.civs.get(0).brickDiff, MainFrame.civs.get(0).powerDiff, MainFrame.civs.get(0).woodDiff, MainFrame.civs.get(0).popDiff};
                     g.setColor(Color.WHITE);
-                    g.drawString(lines[i], 650, i * 25 + 50);
-                    if (diffs[i] > 0) {
-                        g.setColor(Color.GREEN);
-                        g.drawString("\u25B2" + diffs[i], 600, i * 25 + 50);
-                    } else if (diffs[i] < 0) {
-                        g.setColor(Color.RED);
-                        g.drawString("\u25BC" + Math.abs(diffs[i]), 600, i * 25 + 50);
+                    g.setFont(g.getFont().deriveFont(18.0f));
+                    for (int i = 0; i < lines.length; i++) {
+                        g.setColor(Color.WHITE);
+                        g.drawString(lines[i], 650, i * 25 + 50);
+                        if (diffs[i] > 0) {
+                            g.setColor(Color.GREEN);
+                            g.drawString("\u25B2" + diffs[i], 600, i * 25 + 50);
+                        } else if (diffs[i] < 0) {
+                            g.setColor(Color.RED);
+                            g.drawString("\u25BC" + Math.abs(diffs[i]), 600, i * 25 + 50);
+                        }
                     }
+                    g.setColor(Color.WHITE);
+                    g.drawString("Unrest :", 100, 700);
+                    g.setColor(Color.RED);
+                    g.fillRect(200, 682, (int)MainFrame.civs.get(0).unrest * 2, 18);
                 }
-                g.setColor(Color.WHITE);
-                g.drawString("Unrest :", 100, 700);
-                g.setColor(Color.RED);
-                g.fillRect(200, 682, (int) MainFrame.civs.get(0).unrest, 18);
             }
         }
     }
 
     public void alienInteraction(Civ alien, Graphics g) {
         g.setColor(Color.WHITE);
-        g.drawString("You are now interacting with The "+ alien.name, 100, 100);
+        g.setFont(g.getFont().deriveFont(24.0f));
+        g.drawString("You are now interacting with The " + alien.name + ".", 25, 100);
+        g.setFont(g.getFont().deriveFont(16.0f));
+        g.drawString("Attempt Military Conquest", 25, 150);
+        g.drawString("Trade With The " + alien.name, 25, 180);
+        g.drawString("Diplomatic Convention", 25, 210);
+        if ((MouseInfo.getPointerInfo().getLocation().x - 13 >= 25 && MouseInfo.getPointerInfo().getLocation().x - 13 <= 200 && MouseInfo.getPointerInfo().getLocation().y - 35 >= 134 && MouseInfo.getPointerInfo().getLocation().y - 35 < 210) && clickedX == 0) {
+            g.fillOval(4, MouseInfo.getPointerInfo().getLocation().y - 35 - (MouseInfo.getPointerInfo().getLocation().y - 35) % 30 + 16, 16, 16);
+        } else if (clickedX != 0) {
+            g.setColor(Color.RED);
+            g.fillOval(clickedX, clickedY, 16, 16);
+        }
+        if ((MouseInfo.getPointerInfo().getLocation().x - 13 >= 25 && MouseInfo.getPointerInfo().getLocation().x - 13 <= 200 && MouseInfo.getPointerInfo().getLocation().y - 35 >= 134 && MouseInfo.getPointerInfo().getLocation().y - 35 < 150) || clickedY >= 134 && clickedY <= 150) {
+            g.setColor(Color.WHITE);
+            g.drawRect(200, 300, 400, 300);
+            g.setFont(g.getFont().deriveFont(24.0f));
+            g.drawString("MILITARY ACTION", 225, 325);
+            g.setFont(g.getFont().deriveFont(16.0f));
+            g.drawString(MainFrame.civs.get(0).army.name, 225, 350);
+            g.drawString(alien.army.name, 225, 375);
+            g.drawString("Strength", 225, 575);
+            g.drawString("Defense", 300, 575);
+            g.drawRect(425, 425, 150, 100);
+            g.setFont(g.getFont().deriveFont(32.0f));
+            g.drawString("BEGIN", 450, 481);
+            g.setColor(MainFrame.civs.get(0).outlineColor);
+            g.fillRect(225, 550 - MainFrame.civs.get(0).army.strength(), 25, MainFrame.civs.get(0).army.strength());
+            g.fillRect(300, 550 - MainFrame.civs.get(0).army.defense(), 25, MainFrame.civs.get(0).army.defense());
+            g.setColor(alien.outlineColor);
+            g.fillRect(250, 550 - alien.army.strength(), 25, alien.army.strength());
+            g.fillRect(325, 550 - alien.army.defense(), 25, alien.army.defense());
+        } else if ((MouseInfo.getPointerInfo().getLocation().x - 13 >= 25 && MouseInfo.getPointerInfo().getLocation().x - 13 <= 200 && MouseInfo.getPointerInfo().getLocation().y - 35 >= 150 && MouseInfo.getPointerInfo().getLocation().y - 35 < 166) || clickedY >= 150 && clickedY <= 166) {
+            g.setColor(Color.WHITE);
+            g.drawRect(200, 300, 400, 300);
+            g.setFont(g.getFont().deriveFont(24.0f));
+            g.drawString("TRADE", 225, 325);
+            g.setFont(g.getFont().deriveFont(16.0f));
+            g.drawString("5 WOOD -> 3 CREDITS", 225, 350);
+            g.drawString("10 STONE -> 5 CREDITS", 225, 375);
+            g.drawString("10 BRICKS -> 7 CREDITS", 225, 400);
+            g.drawRect(425, 425, 150, 100);
+            g.setFont(g.getFont().deriveFont(32.0f));
+            g.drawString("BEGIN", 450, 481);
+            g.setColor(MainFrame.civs.get(0).outlineColor);
+            g.fillRect(225, 550 - MainFrame.civs.get(0).army.strength(), 25, MainFrame.civs.get(0).army.strength());
+            g.fillRect(300, 550 - MainFrame.civs.get(0).army.defense(), 25, MainFrame.civs.get(0).army.defense());
+            g.setColor(alien.outlineColor);
+            g.fillRect(250, 550 - alien.army.strength(), 25, alien.army.strength());
+            g.fillRect(325, 550 - alien.army.defense(), 25, alien.army.defense());
+        }
     }
 
     @Override

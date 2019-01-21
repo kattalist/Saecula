@@ -35,7 +35,6 @@ public class StarSystem {
     }
 
     public void display(Graphics g) {
-        Graphics2D g2 = (Graphics2D) g;
         for (Planet p : system) {
             if (Planet.clickedPlanet != null) {
                 Planet.clickedPlanet.drawBoard(g);
