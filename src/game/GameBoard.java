@@ -25,6 +25,7 @@ public class GameBoard extends javax.swing.JPanel {
     public boolean interacting = false;
 
     public int clickedX = 0, clickedY = 0;
+
     /**
      * Creates new form GameBoard
      */
@@ -109,37 +110,35 @@ public class GameBoard extends javax.swing.JPanel {
                 } else {
                     for (StarSystem s : MainFrame.universe) {
                         s.display(g);
-                        if (s.owner != MainFrame.civs.get(0)) {
-                            g.setColor(s.owner.outlineColor);
-                            int[] xPoints = {s.centerStar.x - MainFrame.screenX - 30, s.centerStar.x - MainFrame.screenX, s.centerStar.x - MainFrame.screenX - 30};
-                            int[] yPoints = {s.centerStar.y - MainFrame.screenY - 30, s.centerStar.y - MainFrame.screenY, s.centerStar.y - MainFrame.screenY + 30};
-                            if (s.centerStar.x - MainFrame.screenX > 800) {
-                                xPoints[0] = 770;
-                                xPoints[1] = 800;
-                                xPoints[2] = 770;
-                                g.drawPolyline(xPoints, yPoints, 3);
-                            } else if (s.centerStar.x - MainFrame.screenX < 0) {
-                                xPoints[0] = 30;
-                                xPoints[1] = 0;
-                                xPoints[2] = 30;
-                                g.drawPolyline(xPoints, yPoints, 3);
-                            } else if (s.centerStar.y - MainFrame.screenY < 0) {
-                                xPoints[0] = s.centerStar.x - MainFrame.screenX - 30;
-                                xPoints[1] = s.centerStar.x - MainFrame.screenX;
-                                xPoints[2] = s.centerStar.x - MainFrame.screenX + 30;
-                                yPoints[0] = 30;
-                                yPoints[1] = 0;
-                                yPoints[2] = 30;
-                                g.drawPolyline(xPoints, yPoints, 3);
-                            } else if (s.centerStar.y - MainFrame.screenY > 800) {
-                                xPoints[0] = s.centerStar.x - MainFrame.screenX - 30;
-                                xPoints[1] = s.centerStar.x - MainFrame.screenX;
-                                xPoints[2] = s.centerStar.x - MainFrame.screenX + 30;
-                                yPoints[0] = 733;
-                                yPoints[1] = 763;
-                                yPoints[2] = 733;
-                                g.drawPolyline(xPoints, yPoints, 3);
-                            }
+                        g.setColor(s.owner.outlineColor);
+                        int[] xPoints = {s.centerStar.x - MainFrame.screenX - 30, s.centerStar.x - MainFrame.screenX, s.centerStar.x - MainFrame.screenX - 30};
+                        int[] yPoints = {s.centerStar.y - MainFrame.screenY - 30, s.centerStar.y - MainFrame.screenY, s.centerStar.y - MainFrame.screenY + 30};
+                        if (s.centerStar.x - MainFrame.screenX > 800) {
+                            xPoints[0] = 770;
+                            xPoints[1] = 800;
+                            xPoints[2] = 770;
+                            g.drawPolyline(xPoints, yPoints, 3);
+                        } else if (s.centerStar.x - MainFrame.screenX < 0) {
+                            xPoints[0] = 30;
+                            xPoints[1] = 0;
+                            xPoints[2] = 30;
+                            g.drawPolyline(xPoints, yPoints, 3);
+                        } else if (s.centerStar.y - MainFrame.screenY < 0) {
+                            xPoints[0] = s.centerStar.x - MainFrame.screenX - 30;
+                            xPoints[1] = s.centerStar.x - MainFrame.screenX;
+                            xPoints[2] = s.centerStar.x - MainFrame.screenX + 30;
+                            yPoints[0] = 30;
+                            yPoints[1] = 0;
+                            yPoints[2] = 30;
+                            g.drawPolyline(xPoints, yPoints, 3);
+                        } else if (s.centerStar.y - MainFrame.screenY > 800) {
+                            xPoints[0] = s.centerStar.x - MainFrame.screenX - 30;
+                            xPoints[1] = s.centerStar.x - MainFrame.screenX;
+                            xPoints[2] = s.centerStar.x - MainFrame.screenX + 30;
+                            yPoints[0] = 733;
+                            yPoints[1] = 763;
+                            yPoints[2] = 733;
+                            g.drawPolyline(xPoints, yPoints, 3);
                         }
                     }
                 }
@@ -162,7 +161,7 @@ public class GameBoard extends javax.swing.JPanel {
                     g.setColor(Color.WHITE);
                     g.drawString("Unrest :", 100, 700);
                     g.setColor(Color.RED);
-                    g.fillRect(200, 682, (int)MainFrame.civs.get(0).unrest * 2, 18);
+                    g.fillRect(200, 682, (int) MainFrame.civs.get(0).unrest * 2, 18);
                 }
             }
         }
@@ -210,7 +209,9 @@ public class GameBoard extends javax.swing.JPanel {
             g.drawString("5 WOOD -> 3 CREDITS", 225, 350);
             g.drawString("10 STONE -> 5 CREDITS", 225, 375);
             g.drawString("10 BRICKS -> 7 CREDITS", 225, 400);
-            g.drawRect(425, 425, 150, 100);
+            g.drawRect(425, 334, 150, 16);
+            g.drawRect(425, 359, 150, 16);
+            g.drawRect(425, 384, 150, 16);
             g.setFont(g.getFont().deriveFont(32.0f));
             g.drawString("BEGIN", 450, 481);
             g.setColor(MainFrame.civs.get(0).outlineColor);
